@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+SHORT_HASH=${GITHUB_SHA:0:7}
+
 main() {
   echo "" # see https://github.com/actions/toolkit/issues/168
 
@@ -89,7 +91,7 @@ translateDockerTag() {
     TAGS=$(echo "${INPUT_NAME}" | cut -d':' -f2)
     INPUT_NAME=$(echo "${INPUT_NAME}" | cut -d':' -f1)
   elif isOnMaster; then
-    TAGS=$(echo "master-${GITHUB_SHA:0:7}")
+    TAGS=$(echo "master-${SHORT_HASH}")
   elif isGitTag && usesBoolean "${INPUT_TAG_SEMVER}" && isSemver "${GITHUB_REF}"; then
     TAGS=$(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g" | sed -E "s/v?([0-9]+)\.([0-9+])\.([0-9]+)(-[a-zA-Z]+(\.[0-9]+)?)?/\1.\2.\3\4 \1.\2\4 \1\4/g")
   elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
@@ -97,9 +99,9 @@ translateDockerTag() {
   elif isGitTag; then
     TAGS="latest"
   elif isPullRequest; then
-    TAGS=$(echo "${BRANCH}-PR-${GITHUB_SHA:0:7}")
+    TAGS=$(echo "${BRANCH}-PR-${SHORT_HASH}")
   else
-    TAGS=$(echo "${BRANCH}-${GITHUB_SHA:0:7}")
+    TAGS=$(echo "${BRANCH}-${SHORT_HASH}")
   fi;
 }
 
