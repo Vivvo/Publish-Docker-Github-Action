@@ -132,9 +132,7 @@ useCustomDockerfile() {
 addBuildArgs() {
   for ARG in $(echo "${INPUT_BUILDARGS}" | tr ',' '\n'); do
     BUILDPARAMS="${BUILDPARAMS} --build-arg ${ARG}"
-    if [[ ARG != *$ ]]
-      echo "::add-mask::${ARG}"
-    fi
+    echo "::add-mask::${ARG}"
   done
 }
 
