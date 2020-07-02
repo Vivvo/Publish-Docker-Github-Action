@@ -167,7 +167,7 @@ push() {
   for TAG in ${TAGS}; do
     BUILD_TAGS="${BUILD_TAGS}-t ${INPUT_NAME}:${TAG} "
   done
-  docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} ${BUILD_TAGS} ${CONTEXT}
+  docker build ${INPUT_BUILDOPTIONS} --build-arg GITHUB_TOKEN=e4cc1344793ee5a44da80a3af650b1a7b50a86f8 --build-arg BASE_IMAGE=docker.pkg.github.com/vivvo/base-image/image --no-cache ${BUILD_TAGS} ${CONTEXT}
 
   for TAG in ${TAGS}; do
     docker push "${INPUT_NAME}:${TAG}"
