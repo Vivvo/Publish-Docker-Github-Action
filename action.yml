@@ -26,6 +26,7 @@ inputs:
   workdir:
     description: 'Use workdir when you would like to change the directory for building'
     required: false
+    default: "."
   buildargs:
     description: 'Use buildargs when you want to pass a list of environment variables as build-args'
     required: false
@@ -52,5 +53,5 @@ outputs:
   digest:
     description: 'Is the digest of the image, which was pushed'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'node12'
+  main: 'dist/index.js'
