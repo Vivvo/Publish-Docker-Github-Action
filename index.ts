@@ -53,7 +53,11 @@ async function run() {
     for (let param of args) {
       params = `${params} --build-arg ${param}`;
     }
-    output = await execShellCommand(`docker build ${core.getInput('workdir')} ${params}`);
+    let dir = core.getInput('workdir');
+    if (dir === "") {
+      dir = ".";
+    }
+    output = await execShellCommand(`docker build ${dir} ${params}`);
   } catch {
     sendError(name, `failed to build`);
   }

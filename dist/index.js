@@ -941,7 +941,7 @@ function isGitTag(githubRef) {
 // most @actions toolkit packages have async methods
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var name, output, params, args, _i, args_1, param, _a, id, _b, _c, tag, error_1;
+        var name, output, params, args, _i, args_1, param, dir, _a, id, _b, _c, tag, error_1;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
@@ -960,7 +960,11 @@ function run() {
                         param = args_1[_i];
                         params = params + " --build-arg " + param;
                     }
-                    return [4 /*yield*/, execShellCommand("docker build " + core.getInput('workdir') + " " + params)];
+                    dir = core.getInput('workdir');
+                    if (dir === "") {
+                        dir = ".";
+                    }
+                    return [4 /*yield*/, execShellCommand("docker build " + dir + " " + params)];
                 case 3:
                     output = _d.sent();
                     return [3 /*break*/, 5];
