@@ -41,7 +41,7 @@ function isGitTag(githubRef:string): boolean {
 
 // most @actions toolkit packages have async methods
 async function run() {
-  const name = core.getInput('name').toLowerCase();
+  const name = core.getInput('name');
   await dockerLogin();
   let output = "";
   try {
@@ -53,11 +53,7 @@ async function run() {
     for (let param of args) {
       params = `${params} --build-arg ${param}`;
     }
-    let dir = core.getInput('workdir');
-    if (dir === "") {
-      dir = ".";
-    }
-    output = await execShellCommand(`docker build ${dir} ${params}`);
+    output = await execShellCommand(`docker build ${core.getInput('workdir')} ${params}`);
   } catch {
     sendError(name, `failed to build`);
   }
@@ -73,14 +69,12 @@ async function run() {
     }
   };
 
-  core.setOutput('tag', getTags()[0]);
-
   await execShellCommand(`docker logout ${core.getInput('registry')}`);
 }
 
 async function dockerLogin(){
   const username = core.getInput('username');
-  const registry = core.getInput('registry').toLowerCase();
+  const registry = core.getInput('registry');
   const password = core.getInput('password')
   await execShellCommand(
     `bash -c 'echo ${password} | docker login -u ${username} --password-stdin ${registry}'`,
