@@ -73,6 +73,8 @@ async function run() {
     }
   };
 
+  core.setOutput('tag', getTags()[0]);
+
   await execShellCommand(`docker logout ${core.getInput('registry')}`);
 }
 
