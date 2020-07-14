@@ -52,5 +52,5 @@ outputs:
   digest:
     description: 'Is the digest of the image, which was pushed'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'node12'
+  main: 'dist/index.js'
