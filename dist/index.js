@@ -945,7 +945,7 @@ function run() {
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
-                    name = core.getInput('name');
+                    name = core.getInput('name').toLowerCase();
                     return [4 /*yield*/, dockerLogin()];
                 case 1:
                     _d.sent();
@@ -1013,7 +1013,7 @@ function dockerLogin() {
             switch (_a.label) {
                 case 0:
                     username = core.getInput('username');
-                    registry = core.getInput('registry');
+                    registry = core.getInput('registry').toLowerCase();
                     password = core.getInput('password');
                     return [4 /*yield*/, execShellCommand("bash -c 'echo " + password + " | docker login -u " + username + " --password-stdin " + registry + "'")];
                 case 1:
