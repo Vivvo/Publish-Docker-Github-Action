@@ -998,6 +998,7 @@ function run() {
                     return [3 /*break*/, 6];
                 case 12:
                     ;
+                    core.setOutput('tag', getTags()[0]);
                     return [4 /*yield*/, execShellCommand("docker logout " + core.getInput('registry'))];
                 case 13:
                     _d.sent();
